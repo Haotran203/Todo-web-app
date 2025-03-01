@@ -1,9 +1,8 @@
 //Board details
 import Container from '@mui/material/Container'
-import AppBar from '../../components/AppBar'
+import AppBar from '~/components/AppBar'
 import BoardBar from './BoardBar'
 import BoardContent from './BoardContent'
-import ModeSelect from '../../components/ModeSelect'
 
 function Board() {
   return (

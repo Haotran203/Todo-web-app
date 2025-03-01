@@ -1,9 +1,10 @@
+import { Thermostat } from '@mui/icons-material'
 import { deepOrange, orange, cyan, teal } from '@mui/material/colors'
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 
 const theme = extendTheme({
   trello: {
-    appBarHeight: '48px',
+    appBarHeight: '58px',
     boardBarHeight: '58px'
   },
   colorSchemes: {
@@ -17,6 +18,42 @@ const theme = extendTheme({
       palette: {
         primary: cyan,
         secondary: orange
+      }
+    }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none'
+        }
+      }
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.primary.main,
+          fontSize: '0.875rem'
+        })
+      }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.primary.main,
+          fontSize: '0.875rem',
+          '.MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.primary.light
+          },
+          '&:hover': {
+            '.MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.primary.main
+            }
+          },
+          '& fieldset': {
+            borderColor: '1px !important'
+          }
+        })
       }
     }
   }
