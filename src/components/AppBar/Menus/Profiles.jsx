@@ -33,7 +33,7 @@ function Profiles() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}
+            <Avatar sx={{ width: 34, height: 34 }}
               alt='Tran Quang Hao'
               src='https://taoanhdep.com/wp-content/uploads/2023/11/avt-nen-mau-1.jpg'
             />
