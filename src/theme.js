@@ -1,6 +1,6 @@
-import { Thermostat } from '@mui/icons-material'
+import { Height, Thermostat } from '@mui/icons-material'
 import { deepOrange, orange, cyan, teal } from '@mui/material/colors'
-import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
+import { experimental_extendTheme as extendTheme, hexToRgb } from '@mui/material/styles'
 
 const theme = extendTheme({
   trello: {
@@ -10,18 +10,39 @@ const theme = extendTheme({
   colorSchemes: {
     light: {
       palette: {
-        primary: teal,
+        primary: {
+          main: '#ff7043'
+        },
         secondary: deepOrange
       }
     },
     dark: {
       palette: {
-        primary: cyan,
+        primary: {
+          main: '#00acc1'
+        },
         secondary: orange
       }
     }
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          '*::-webkit-scrollbar': {
+            width: '8px',
+            height: '8px'
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: '#9f8189',
+            borderRadius: '8px'
+          },
+          '*::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#ffcad4'
+          }
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root: {
