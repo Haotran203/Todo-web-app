@@ -294,11 +294,11 @@ function BoardContent({ board }) {
       }
 
       lastOverId.current = overId
-      return ({ id: overId })
+      return [{ id: overId }]
     }
 
     // Nếu overId là null thì trả về mảng rỗng - tránh bug crash trang
-    return lastOverId.current ? ({ id: lastOverId.current }) : []
+    return lastOverId.current ? [{ id: lastOverId.current }] : []
   }, [activeDragItemType, orderedColumns])
 
   return (
