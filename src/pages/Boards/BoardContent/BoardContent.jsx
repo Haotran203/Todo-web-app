@@ -12,9 +12,7 @@ import {
   DragOverlay,
   defaultDropAnimationSideEffects,
   closestCorners,
-  closestCenter,
   pointerWithin,
-  rectIntersection,
   getFirstCollision
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -51,7 +49,6 @@ function BoardContent({ board }) {
   const [activeDragItemData, setActiveDragItemData] = useState([null])
   const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] = useState([null])
 
-  // Điểm va chạm cuối cung xử lý thuật toán phát hiện va chạm
   const lastOverId = useRef(null)
 
   useEffect(() => {
@@ -135,6 +132,7 @@ function BoardContent({ board }) {
 
   // Đang trong quá trình kéo
   const handleDragOver = (event) => {
+    // console.log('handleDragOver')
     // Không làm gì thêm khi đang kéo column
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) return
 
@@ -260,31 +258,26 @@ function BoardContent({ board }) {
     sideEffects: defaultDropAnimationSideEffects({ styles: { active: { opacity: '0.5' } } })
   }
 
-  // Custom lại các chiến lược của thuật toán va chạm.
-  // args = arguments = các đối số, tham số
+  // Custom lại thuật toán phát hiện va chạm
   const collisionDetectionStrategy = useCallback((args) => {
-    // Trường hợp kéo column thì dùng thuật toán closestCorners là chuẩn nhất
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
-      return closestCorners({ ...args })
+      return closestCorners({ ... args })
     }
 
-    // Tìm các điểm giao nhau, va chạm - intersections với con trỏ
     const pointerIntersections = pointerWithin(args)
 
-    // Thuật toán phát hiện va chạm sẽ trả về một mảng các va chạm ở đây
-    const intersections = !!pointerIntersections?.length
-      ? pointerIntersections
-      : rectIntersection(args)
+    if (!pointerIntersections?.length) return
 
+    // const intersections = !!pointerIntersections?.length
+    //   ? pointerIntersections
+    //   : rectIntersection(args)
 
-    // Tìm overId đầu tiên trong intersections ở trên
-    let overId = getFirstCollision(intersections, 'id')
+    let overId = getFirstCollision(pointerIntersections, 'id')
     if (overId) {
       const checkColumn = orderedColumns.find(column => column._id === overId)
-
       if (checkColumn) {
         // console.log('overId before: ', overId)
-        overId = closestCenter({
+        overId = closestCorners({
           ...args,
           droppableContainers: args.droppableContainers.filter(container => {
             return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
@@ -297,7 +290,6 @@ function BoardContent({ board }) {
       return [{ id: overId }]
     }
 
-    // Nếu overId là null thì trả về mảng rỗng - tránh bug crash trang
     return lastOverId.current ? [{ id: lastOverId.current }] : []
   }, [activeDragItemType, orderedColumns])
 
