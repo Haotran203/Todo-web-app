@@ -35,7 +35,11 @@ function Card({ card }) {
       sx={{
         cursor: 'pointer',
         boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
-        overflow: 'unset'
+        overflow: 'unset',
+        display: card?.FE_PlaceholderCard ? 'none' : 'block' // css để ẩn card placeholder
+        // Cách ẩn card placeholder khác:
+        // overflow: card?.FE_PlaceholderCard ? 'hidden' : 'unset'
+        // height: card?.FE_PlaceholderCard ? '0px' : 'unset
       }}
     >
       {card?.cover && <CardMedia sx={{ height: 140 }} image={card?.cover} />}
